@@ -1,0 +1,187 @@
+@use 'variables' as *;
+
+// Responsive breakpoint mixins
+@mixin sm {
+    @media (min-width: $breakpoint-sm) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: $breakpoint-md) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: $breakpoint-lg) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: $breakpoint-xl) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (min-width: $breakpoint-2xl) {
+        @content;
+    }
+}
+
+// Flexbox utilities
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+// Typography mixins
+@mixin heading-style {
+    font-family: $font-display;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    color: $text-primary;
+}
+
+@mixin body-text {
+    font-family: $font-primary;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-base;
+    color: $text-secondary;
+}
+
+// Button base
+@mixin button-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+    font-family: $font-primary;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-base;
+    text-decoration: none;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+// Primary button
+@mixin button-primary {
+    @include button-base;
+    background: $primary;
+    color: $white;
+
+    &:hover:not(:disabled) {
+        background: $primary-dark;
+        box-shadow: $shadow-glow;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(1px);
+    }
+}
+
+// Secondary/outline button
+@mixin button-secondary {
+    @include button-base;
+    background: transparent;
+    color: $primary;
+    border: 2px solid $primary;
+
+    &:hover:not(:disabled) {
+        background: rgba($primary, 0.1);
+        box-shadow: $shadow-glow;
+    }
+}
+
+// Card styles
+@mixin card {
+    background: $background-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    box-shadow: $shadow-md;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-lg;
+    }
+}
+
+// Container
+@mixin container {
+    width: 100%;
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 $container-padding;
+}
+
+// Section spacing
+@mixin section {
+    padding: $spacing-3xl 0;
+
+    @include lg {
+        padding: $spacing-4xl 0;
+    }
+}
+
+// Gradient text
+@mixin gradient-text {
+    background: linear-gradient(135deg, $primary-light, $primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+// Focus styles for accessibility
+@mixin focus-visible {
+    &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+    }
+}
+
+// Hide scrollbar but keep functionality
+@mixin hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// Truncate text with ellipsis
+@mixin truncate($lines: 1) {
+    @if $lines == 1 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    } @else {
+        display: -webkit-box;
+        -webkit-line-clamp: $lines;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
