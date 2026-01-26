@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   const isInSubdirectory =
     path.includes("/pages/") || path.includes("\\pages\\");
-  const componentPath = isInSubdirectory ? "/components/" : "./components/";
+  const componentPath = isInSubdirectory ? "../components/" : "components/";
 
   // Load header
   const headerPlaceholder = document.getElementById("header-placeholder");
@@ -135,9 +135,9 @@ function fixNavigationLinks() {
     const navLinks = document.querySelectorAll(".nav-menu a");
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
-      // Fix links that point to pages directory
+      // Fix links that point to pages directory or root
       if (href.startsWith("pages/")) {
-        link.setAttribute("href", "../" + href);
+        link.setAttribute("href", href.replace("pages/", ""));
       } else if (href === "index.html") {
         link.setAttribute("href", "../index.html");
       }
