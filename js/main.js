@@ -11,7 +11,7 @@ function initNavigation() {
     const navbar = document.getElementById('navbar');
     const navToggle = document.getElementById('nav-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    const mobileLinks = document.querySelectorAll('.mobile-menu__link');
+    const mobileLinks = document.querySelectorAll('.mobile-menu_link');
 
     // Mobile menu toggle
     if (navToggle && mobileMenu) {
@@ -85,7 +85,7 @@ function initSmoothScroll() {
  */
 function initScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav__link');
+    const navLinks = document.querySelectorAll('.nav_link');
 
     if (sections.length === 0 || navLinks.length === 0) return;
 

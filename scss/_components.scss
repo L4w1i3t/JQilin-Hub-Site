@@ -46,13 +46,13 @@
     backdrop-filter: blur(10px);
     border-bottom: 1px solid $gray-medium;
 
-    &__container {
+    &_container {
         @include container;
         @include flex-between;
         height: 70px;
     }
 
-    &__logo {
+    &_logo {
         font-family: $font-display;
         font-size: $font-size-xl;
         font-weight: $font-weight-bold;
@@ -63,7 +63,7 @@
         }
     }
 
-    &__links {
+    &_links {
         display: none;
         gap: $spacing-xl;
 
@@ -72,7 +72,7 @@
         }
     }
 
-    &__link {
+    &_link {
         position: relative;
         color: $text-secondary;
         font-weight: $font-weight-medium;
@@ -100,7 +100,7 @@
         }
     }
 
-    &__cta {
+    &_cta {
         display: none;
 
         @include md {
@@ -108,7 +108,7 @@
         }
     }
 
-    &__toggle {
+    &_toggle {
         display: flex;
         flex-direction: column;
         gap: 5px;
@@ -145,12 +145,12 @@
         transform: translateX(0);
     }
 
-    &__links {
+    &_links {
         @include flex-column;
         gap: $spacing-lg;
     }
 
-    &__link {
+    &_link {
         font-size: $font-size-xl;
         font-weight: $font-weight-medium;
         color: $text-secondary;
@@ -174,12 +174,12 @@
     text-align: center;
     padding-top: calc(70px + $spacing-3xl);
 
-    &__content {
+    &_content {
         @include container;
         max-width: 800px;
     }
 
-    &__badge {
+    &_badge {
         display: inline-block;
         padding: $spacing-xs $spacing-md;
         background: rgba($primary, 0.15);
@@ -191,7 +191,7 @@
         margin-bottom: $spacing-lg;
     }
 
-    &__title {
+    &_title {
         font-size: $font-size-4xl;
         margin-bottom: $spacing-lg;
 
@@ -204,7 +204,7 @@
         }
     }
 
-    &__subtitle {
+    &_subtitle {
         font-size: $font-size-lg;
         color: $text-secondary;
         margin-bottom: $spacing-2xl;
@@ -217,7 +217,7 @@
         }
     }
 
-    &__buttons {
+    &_buttons {
         display: flex;
         flex-wrap: wrap;
         gap: $spacing-md;
@@ -233,12 +233,12 @@
         background: $background-elevated;
     }
 
-    &__header {
+    &_header {
         text-align: center;
         margin-bottom: $spacing-3xl;
     }
 
-    &__title {
+    &_title {
         font-size: $font-size-3xl;
         margin-bottom: $spacing-md;
 
@@ -247,7 +247,7 @@
         }
     }
 
-    &__subtitle {
+    &_subtitle {
         font-size: $font-size-lg;
         color: $text-secondary;
         max-width: 600px;
@@ -260,7 +260,7 @@
     display: flex;
     gap: $spacing-md;
 
-    &__link {
+    &_link {
         @include flex-center;
         width: 44px;
         height: 44px;
@@ -293,7 +293,7 @@
     border-top: 1px solid $gray-medium;
     padding: $spacing-lg 0;
 
-    &__bottom {
+    &_bottom {
         @include container;
         text-align: center;
 
@@ -335,7 +335,7 @@
     backdrop-filter: blur(10px);
     border-bottom: 1px solid $gray-medium;
 
-    &__container {
+    &_container {
         @include container;
         @include flex-between;
         height: 70px;
@@ -357,7 +357,7 @@
     // Pulse animation to draw attention on first load
     animation: pulse 2s ease-in-out 3;
 
-    &__line {
+    &_line {
         display: block;
         width: 24px;
         height: 2px;
@@ -366,19 +366,19 @@
         transition: all $transition-base;
     }
 
-    &.active &__line:nth-child(1) {
+    &.active &_line:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
 
-    &.active &__line:nth-child(2) {
+    &.active &_line:nth-child(2) {
         opacity: 0;
     }
 
-    &.active &__line:nth-child(3) {
+    &.active &_line:nth-child(3) {
         transform: rotate(-45deg) translate(5px, -5px);
     }
 
-    &:hover &__line {
+    &:hover &_line {
         background: $primary;
     }
 }
@@ -442,13 +442,13 @@
         transform: translateX(0);
     }
 
-    .nav__list {
+    .nav_list {
         @include flex-column;
         gap: $spacing-md;
         margin-bottom: $spacing-xl;
     }
 
-    .nav__link {
+    .nav_link {
         display: block;
         padding: $spacing-sm $spacing-md;
         color: $text-secondary;
@@ -464,7 +464,7 @@
         }
     }
 
-    .nav__cta {
+    .nav_cta {
         width: 100%;
         text-align: center;
     }
@@ -517,7 +517,7 @@
     background: linear-gradient(180deg, rgba($primary, 0.1) 0%, transparent 100%);
     text-align: center;
 
-    &__title {
+    &_title {
         font-size: $font-size-4xl;
         margin-bottom: $spacing-sm;
 
@@ -526,7 +526,7 @@
         }
     }
 
-    &__subtitle {
+    &_subtitle {
         font-size: $font-size-lg;
         color: $text-secondary;
     }
@@ -633,13 +633,13 @@
         border-color: $primary;
         box-shadow: $shadow-glow;
 
-        .content-card__icon {
+        .content-card_icon {
             color: $primary;
             transform: scale(1.1);
         }
     }
 
-    &__icon {
+    &_icon {
         color: $text-secondary;
         margin-bottom: $spacing-lg;
         transition: all $transition-base;
@@ -650,14 +650,14 @@
         }
     }
 
-    &__title {
+    &_title {
         font-size: $font-size-xl;
         font-weight: $font-weight-semibold;
         color: $white;
         margin-bottom: $spacing-sm;
     }
 
-    &__desc {
+    &_desc {
         font-size: $font-size-sm;
         color: $text-muted;
         margin: 0;
@@ -686,27 +686,27 @@
         text-align: left;
     }
 
-    &__image {
+    &_image {
         flex-shrink: 0;
     }
 
-    &__content {
+    &_content {
         flex: 1;
     }
 
-    &__name {
+    &_name {
         font-size: $font-size-3xl;
         margin-bottom: $spacing-xs;
         color: $white;
     }
 
-    &__role {
+    &_role {
         font-size: $font-size-lg;
         color: $primary;
         margin-bottom: $spacing-xl;
     }
 
-    &__stats {
+    &_stats {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: $spacing-lg;
@@ -733,14 +733,14 @@
 .stat {
     text-align: center;
 
-    &__value {
+    &_value {
         font-size: $font-size-2xl;
         font-weight: $font-weight-bold;
         color: $primary;
         margin-bottom: $spacing-xs;
     }
 
-    &__label {
+    &_label {
         font-size: $font-size-sm;
         color: $text-muted;
     }
@@ -749,7 +749,7 @@
 .about-section {
     @include card;
 
-    &__title {
+    &_title {
         font-size: $font-size-xl;
         margin-bottom: $spacing-md;
         color: $white;
@@ -797,14 +797,14 @@
     border: 1px solid rgba($primary, 0.2);
     border-radius: $radius-md;
 
-    &__day {
+    &_day {
         font-size: $font-size-lg;
         font-weight: $font-weight-semibold;
         color: $white;
         margin-bottom: $spacing-xs;
     }
 
-    &__time {
+    &_time {
         font-size: $font-size-sm;
         color: $text-secondary;
     }
@@ -823,11 +823,11 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.card__title {
+.card_title {
     margin-bottom: $spacing-sm;
 }
 
-.about-section__subtitle {
+.about-section_subtitle {
     margin-bottom: $spacing-lg;
 }
 
@@ -853,7 +853,7 @@
         border-color: rgba($primary, 0.3);
     }
 
-    &__image {
+    &_image {
         width: 100%;
         aspect-ratio: 16 / 9;
         overflow: hidden;
@@ -867,18 +867,18 @@
         }
     }
 
-    &__content {
+    &_content {
         padding: $spacing-lg;
     }
 
-    &__title {
+    &_title {
         font-size: $font-size-xl;
         font-weight: $font-weight-bold;
         color: $white;
         margin-bottom: $spacing-xs;
     }
 
-    &__desc {
+    &_desc {
         color: $text-secondary;
         font-size: $font-size-base;
     }
