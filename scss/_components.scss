@@ -752,6 +752,16 @@
     }
 }
 
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: $radius-full;
+    border: 3px solid $primary;
+    background: $background-card;
+    object-fit: cover;
+    display: block;
+}
+
 .stat {
     text-align: center;
 
