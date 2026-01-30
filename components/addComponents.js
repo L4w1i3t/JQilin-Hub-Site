@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Fix logo link when in subdirectory
         fixLogoLink();
 
+        // Fix logo image path when in subdirectory
+        fixLogoImage();
+
         // Highlight active nav link
         highlightCurrentPage();
       })
@@ -155,6 +158,20 @@ function fixLogoLink() {
     const logoLink = document.getElementById("logo-link");
     if (logoLink && logoLink.getAttribute("href") === "index.html") {
       logoLink.setAttribute("href", "../index.html");
+    }
+  }
+}
+
+// Function to fix the logo image path when in subdirectory
+function fixLogoImage() {
+  const path = window.location.pathname;
+  const isInSubdirectory =
+    path.includes("/pages/") || path.includes("\\pages\\");
+
+  if (isInSubdirectory) {
+    const logoImg = document.querySelector(".logo-img");
+    if (logoImg && logoImg.getAttribute("src") === "assets/logo.png") {
+      logoImg.setAttribute("src", "../assets/logo.png");
     }
   }
 }

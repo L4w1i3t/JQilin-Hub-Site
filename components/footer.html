@@ -1,7 +1,7 @@
 <!-- Footer -->
 <footer class="footer">
     <div class="footer_bottom">
-        <p>&copy; <span id="copyright-year">2026</span> JQilin Gaming. All rights reserved.</p>
+        <p>&copy; <span id="copyright-year">currentyear</span> JQilin Gaming. All rights reserved.</p>
     </div>
 </footer>
 
@@ -11,3 +11,23 @@
         <polyline points="18 15 12 9 6 15"></polyline>
     </svg>
 </button>
+
+<script>
+    // Set current year in footer
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+    // Back to Top Button functionality
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
