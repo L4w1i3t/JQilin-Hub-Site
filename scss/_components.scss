@@ -10,6 +10,26 @@
 .btn {
     @include button-base;
     @include focus-visible;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent, rgba($white, 0.22), transparent);
+        transform: translateX(-120%);
+        transition: transform $transition-slow;
+    }
+
+    &:hover::before {
+        transform: translateX(120%);
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 .btn-primary {
@@ -33,6 +53,56 @@
 // Cards
 .card {
     @include card;
+    border: 1px solid rgba($white, 0.06);
+    background:
+        linear-gradient(145deg, rgba($white, 0.04), transparent),
+        $background-card;
+
+    &:hover {
+        border-color: rgba($primary, 0.35);
+        box-shadow: $shadow-glow;
+    }
+}
+
+/* Calendly Embed – use default sizing but remain responsive */
+.calendly-inline-widget {
+    /* Allow the widget to take its intrinsic size while scaling with the container */
+    width: 100%;
+    max-width: none;
+    margin: 0 auto $spacing-lg;
+    /* Preserve aspect ratio for typical Calendly embed (approx 320x630) */
+    aspect-ratio: 320 / 630;
+    /* Ensure any iframe inside fills the container */
+    iframe {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+/* Affiliate & Merch Links Styling */
+.link-list {
+    list-style: none;
+    padding: 0;
+    margin: $spacing-md 0;
+    display: grid;
+    gap: $spacing-md;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.link-list li a {
+    display: block;
+    padding: $spacing-sm $spacing-md;
+    background: $background-card;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    text-decoration: none;
+    transition: background $transition-base, color $transition-base;
+    font-weight: $font-weight-medium;
+}
+
+.link-list li a:hover {
+    background: $primary;
+    color: $white;
 }
 
 // Navigation
@@ -169,14 +239,46 @@
 // Hero Section
 .hero {
     @include section;
+    position: relative;
+    overflow: hidden;
     min-height: 100vh;
     @include flex-center;
     text-align: center;
     padding-top: calc(70px + $spacing-3xl);
 
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        border-radius: $radius-full;
+        filter: blur(14px);
+        pointer-events: none;
+    }
+
+    &::before {
+        width: 18rem;
+        height: 18rem;
+        top: 18%;
+        left: -5rem;
+        background: rgba($primary, 0.14);
+        animation: floatOrb 10s ease-in-out infinite;
+    }
+
+    &::after {
+        width: 13rem;
+        height: 13rem;
+        right: -3rem;
+        bottom: 18%;
+        background: rgba($primary-light, 0.1);
+        animation: floatOrb 12s ease-in-out infinite reverse;
+    }
+
     &_content {
         @include container;
+        position: relative;
+        z-index: 1;
         max-width: 800px;
+        animation: heroEntrance 700ms ease-out both;
     }
 
     &_badge {
@@ -194,6 +296,7 @@
     &_title {
         font-size: $font-size-4xl;
         margin-bottom: $spacing-lg;
+        text-shadow: 0 0 28px rgba($primary, 0.18);
 
         @include md {
             font-size: $font-size-5xl;
@@ -201,6 +304,8 @@
 
         .highlight {
             @include gradient-text;
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
         }
     }
 
@@ -228,6 +333,7 @@
 // Section styling
 .section {
     @include section;
+    position: relative;
 
     &--alt {
         background: $background-elevated;
@@ -241,6 +347,10 @@
     &_title {
         font-size: $font-size-3xl;
         margin-bottom: $spacing-md;
+        background: linear-gradient(135deg, $white, rgba($primary-light, 0.9));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
 
         @include md {
             font-size: $font-size-4xl;
@@ -283,6 +393,49 @@
     }
 }
 
+/* Calendly loading spinner and wrapper */
+.loader {
+    border: 4px solid $gray-medium;
+    border-top: 4px solid $primary;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.calendly-wrapper {
+    position: relative;
+    min-height: 630px; /* match embed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendly-wrapper .calendly-inline-widget {
+    opacity: 0;
+    transition: opacity $transition-base;
+    width: 100%;
+    height: 100%;
+}
+
+.calendly-wrapper.loaded .calendly-inline-widget {
+    opacity: 1;
+}
+
+.calendly-wrapper.loaded .loader {
+    display: none;
+}
+
 // Footer
 #footer-placeholder {
     margin-top: auto;
@@ -302,6 +455,60 @@
             color: $text-secondary;
             margin: 0;
         }
+    }
+}
+
+// Scroll reveal animation
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 700ms ease, transform 700ms ease;
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes heroEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes floatOrb {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(1.5rem, -1rem, 0) scale(1.08);
+    }
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
     }
 }
 
@@ -331,9 +538,16 @@
     left: 0;
     right: 0;
     z-index: $z-fixed;
-    background: rgba($background, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid $gray-medium;
+    background: rgba($background, 0.82);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba($primary, 0.16);
+    transition: background $transition-base, box-shadow $transition-base, border-color $transition-base;
+
+    &.is-scrolled {
+        background: rgba($background, 0.96);
+        border-color: rgba($primary, 0.32);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
+    }
 
     &_container {
         @include container;
@@ -346,11 +560,12 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    transition: opacity $transition-base;
+    transition: opacity $transition-base, transform $transition-base;
     @include focus-visible;
 
     &:hover {
         opacity: 0.8;
+        transform: translateY(-1px) scale(1.02);
     }
 
     .logo-img {
@@ -452,8 +667,10 @@
     right: 0;
     width: 280px;
     height: calc(100vh - 70px);
-    background: $background-elevated;
-    border-left: 1px solid $gray-medium;
+    background:
+        linear-gradient(180deg, rgba($primary, 0.09), transparent),
+        rgba($background-elevated, 0.98);
+    border-left: 1px solid rgba($primary, 0.2);
     padding: $spacing-xl;
     transform: translateX(100%);
     transition: transform $transition-base;
@@ -462,6 +679,7 @@
 
     &.active {
         transform: translateX(0);
+        box-shadow: -24px 0 60px rgba(0, 0, 0, 0.42);
     }
 
     .nav_list {
@@ -482,7 +700,8 @@
         &:hover,
         &.active {
             color: $white;
-            background: rgba($primary, 0.1);
+            background: linear-gradient(90deg, rgba($primary, 0.22), rgba($primary, 0.06));
+            transform: translateX(4px);
         }
     }
 
@@ -535,13 +754,29 @@
 
 // Page Header
 .page-header {
+    position: relative;
+    overflow: hidden;
     padding: calc(70px + $spacing-3xl) 0 $spacing-2xl;
-    background: linear-gradient(180deg, rgba($primary, 0.1) 0%, transparent 100%);
+    background:
+        radial-gradient(circle at 50% 0%, rgba($primary, 0.22), transparent 34rem),
+        linear-gradient(180deg, rgba($primary, 0.12) 0%, transparent 100%);
     text-align: center;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: min(48rem, 80vw);
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba($primary, 0.7), transparent);
+        transform: translateX(-50%);
+    }
 
     &_title {
         font-size: $font-size-4xl;
         margin-bottom: $spacing-sm;
+        animation: heroEntrance 650ms ease-out both;
 
         @include md {
             font-size: $font-size-5xl;
@@ -643,7 +878,9 @@
     flex-direction: column;
     align-items: center;
     padding: $spacing-2xl $spacing-lg;
-    background: $background-card;
+    background:
+        linear-gradient(145deg, rgba($primary, 0.08), transparent 45%),
+        $background-card;
     border-radius: $radius-lg;
     text-align: center;
     text-decoration: none;
@@ -651,9 +888,9 @@
     border: 1px solid transparent;
 
     &:hover {
-        transform: translateY(-4px);
+        transform: translateY(-6px) scale(1.01);
         border-color: $primary;
-        box-shadow: $shadow-glow;
+        box-shadow: $shadow-glow-strong;
 
         .content-card_icon {
             color: $primary;
@@ -702,6 +939,10 @@
     align-items: center;
     text-align: center;
     gap: $spacing-xl;
+    background:
+        radial-gradient(circle at top left, rgba($primary, 0.15), transparent 14rem),
+        linear-gradient(145deg, rgba($white, 0.04), transparent),
+        $background-card;
 
     @include md {
         flex-direction: row;
@@ -760,6 +1001,13 @@
     background: $background-card;
     object-fit: cover;
     display: block;
+    box-shadow: 0 0 0 6px rgba($primary, 0.08), $shadow-glow;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:hover {
+        transform: rotate(-2deg) scale(1.04);
+        box-shadow: 0 0 0 8px rgba($primary, 0.1), $shadow-glow-strong;
+    }
 }
 
 .stat {
@@ -780,6 +1028,7 @@
 
 .about-section {
     @include card;
+    border: 1px solid rgba($white, 0.06);
 
     &_title {
         font-size: $font-size-xl;
@@ -812,6 +1061,13 @@
     color: $primary-light;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
+    transition: transform $transition-base, background $transition-base, color $transition-base;
+
+    &:hover {
+        background: rgba($primary, 0.28);
+        color: $white;
+        transform: translateY(-2px);
+    }
 }
 
 .schedule-grid {
@@ -871,7 +1127,9 @@
 }
 
 .project-card {
-    background: $background-card;
+    background:
+        linear-gradient(145deg, rgba($white, 0.04), transparent),
+        $background-card;
     border-radius: $radius-lg;
     overflow: hidden;
     transition: all $transition-base;
@@ -880,9 +1138,13 @@
     border: 1px solid rgba($primary, 0.1);
 
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: $shadow-glow;
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: $shadow-glow-strong;
         border-color: rgba($primary, 0.3);
+
+        img {
+            transform: scale(1.05);
+        }
     }
 
     &_image {
@@ -896,6 +1158,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform $transition-slow;
         }
     }
 
